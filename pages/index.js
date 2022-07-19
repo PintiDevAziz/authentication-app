@@ -33,7 +33,7 @@ const Index = () => {
                   Create new account
                 </a>
               </Link>
-              <Link href={"user/register"}>
+              <Link href={"user/login"}>
                 <a className="border-2 hover:border-themeBlue border-borderGray rounded-md mx-4 p-4 ">
                   Login
                 </a>
