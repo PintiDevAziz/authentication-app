@@ -7,7 +7,8 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { setDoc, doc } from "firebase/firestore";
 export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -21,6 +22,15 @@ export const AuthContextProvider = ({ children }) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((user) => {
         setLoginError(null);
+        let docRef = doc(db, "users", user.user.uid);
+        setDoc(docRef, {
+          name: user.user.displayName,
+          email: user.user.email,
+          photoURL: user.user.photoURL,
+          bio: "No Bio Yet",
+          phone: "No Phone Number",
+          id: user.user.uid,
+        });
       })
       .catch((err) => {
         setLoginError(err.code?.replace("auth/", ""));
@@ -32,21 +42,39 @@ export const AuthContextProvider = ({ children }) => {
   //! Login with Github
   const loginWithGithub = () => {
     signInWithPopup(auth, githubProvider)
-      .then(() => {
+      .then((user) => {
         setLoginError(null);
+        let docRef = doc(db, "users", user.user.uid);
+        setDoc(docRef, {
+          name: user.user.displayName,
+          email: user.user.email,
+          photoURL: user.user.photoURL,
+          bio: "No Bio Yet",
+          phone: "No Phone Number",
+          id: user.user.uid,
+        });
       })
       .catch((err) => {
-        setLoginError(err.code.replace("auth/", ""));
+        setLoginError(err.code?.replace("auth/", ""));
       });
   };
   //! Login with Google
   const loginWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
-      .then(() => {
+      .then((user) => {
         setLoginError(null);
+        let docRef = doc(db, "users", user.user.uid);
+        setDoc(docRef, {
+          name: user.user.displayName,
+          email: user.user.email,
+          photoURL: user.user.photoURL,
+          bio: "No Bio Yet",
+          phone: "No Phone Number",
+          id: user.user.uid,
+        });
       })
       .catch((err) => {
-        setLoginError(err.code.replace("auth/", ""));
+        setLoginError(err.code?.replace("auth/", ""));
       });
   };
 
@@ -58,7 +86,7 @@ export const AuthContextProvider = ({ children }) => {
         setRegisterError(null);
       })
       .catch((err) => {
-        setRegisterError(err.code.replace("auth/", ""));
+        setRegisterError(err.code?.replace("auth/", ""));
       });
   };
 

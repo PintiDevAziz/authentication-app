@@ -9,7 +9,6 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../contexts/AuthContext";
 import ErrorText from "../../components/User/ErrorText";
